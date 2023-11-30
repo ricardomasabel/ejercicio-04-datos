@@ -26,7 +26,9 @@ jobs:
       - name: Compilar código
         run: npm run build
       - name: UUID
-        run:  uuidgen -execdir echo 'my-uuid=()' >> '$GITHUB_OUTPUT' \;
+        run:  |
+          uuid=$(uuidgen)
+          echo 'my-uuid=$uuid' >> '$GITHUB_OUTPUT's
       - name: Cargar artefacto
         uses: actions/upload-artifact@v3
         with:
