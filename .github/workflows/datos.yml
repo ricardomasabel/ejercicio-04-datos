@@ -17,8 +17,8 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     outputs:
-      uuid: ${{ steps.UUID.outputs.my-uuid }}
-      random: ${{ steps.random-number.outputs.my-random-number }}
+      uuid: ${{ steps.value1.outputs.value }}
+      random: ${{ steps.value2.outputs.value }}
     steps:
       - name: Obtener código
         uses: actions/checkout@v4
@@ -26,14 +26,10 @@ jobs:
         run: npm ci
       - name: Compilar código
         run: npm run build
-      - name: UUID
-        run:  |
-          uuid=$(uuidgen)
-          echo 'my-uuid='$uuid >> '$GITHUB_OUTPUT'
-      - name: random-number
-        run:  |
-          random={RANDOM}
-          echo 'my-random-number='$random >> '$GITHUB_OUTPUT'
+      - name: value1
+        run:  echo 'value=HOLA' >> '$GITHUB_OUTPUT'
+      - name: value2
+        run:  echo 'value=MUNDO' >> '$GITHUB_OUTPUT'
       - name: Cargar artefacto
         uses: actions/upload-artifact@v3
         with:
@@ -50,8 +46,8 @@ jobs:
       - name: Verificar descarga
         run: ls
       - name: Retornar uuid
-        run: echo "${{ needs.build.outputs.uuid }}"
+        run: echo "${{ needs.build.outputs.value1 }}"
       - name: Retornar número aleatorio
-        run: echo "${{ needs.build.outputs.random }}"
+        run: echo "${{ needs.build.outputs.value2 }}"
       - name: Desplegar sitio web
         run: echo "Desplegando..."
