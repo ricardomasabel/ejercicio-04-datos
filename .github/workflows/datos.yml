@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       uuid: ${{ steps.UUID.outputs.my-uuid }}
+      random: ${{ steps.random-number.outputs.my-random-number }}
     steps:
       - name: Obtener código
         uses: actions/checkout@v4
@@ -28,7 +29,11 @@ jobs:
       - name: UUID
         run:  |
           uuid=$(uuidgen)
-          echo 'my-uuid=$uuid' >> '$GITHUB_OUTPUT'
+          echo 'my-uuid='$uuid >> '$GITHUB_OUTPUT'
+      - name: random-number
+        run:  |
+          random={RANDOM}
+          echo 'my-random-number='$random >> '$GITHUB_OUTPUT'
       - name: Cargar artefacto
         uses: actions/upload-artifact@v3
         with:
@@ -46,5 +51,6 @@ jobs:
         run: ls
       - name: Retornar número aleatorio
         run: echo "${{ needs.build.outputs.uuid }}"
+        run: echo "${{ needs.build.outputs.random }}"
       - name: Desplegar sitio web
         run: echo "Desplegando..."
