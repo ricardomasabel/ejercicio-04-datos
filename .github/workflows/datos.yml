@@ -17,8 +17,8 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     outputs:
-      uuid: ${{ steps.value1.outputs.value }}
-      random: ${{ steps.value2.outputs.value }}
+      Value1: ${{ steps.value1.outputs.value }}
+      Value2: ${{ steps.value2.outputs.value }}
     steps:
       - name: Obtener código
         uses: actions/checkout@v4
@@ -46,8 +46,8 @@ jobs:
       - name: Verificar descarga
         run: ls
       - name: Retornar uuid
-        run: echo "${{ needs.build.outputs.value1 }}"
+        run: echo "${{ needs.build.outputs.Value1 }}"
       - name: Retornar número aleatorio
-        run: echo "${{ needs.build.outputs.value2 }}"
+        run: echo "${{ needs.build.outputs.Value2 }}"
       - name: Desplegar sitio web
         run: echo "Desplegando..."
