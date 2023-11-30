@@ -17,7 +17,8 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     outputs:
-      archivo-de-script: ${{ steps.publish.outputs.archivo }}
+      numero-aleatorio: ${{ steps.Aleatorio.outputs.aleatorio }}
+      job-timestamp: ${{ steps.Timestamp.outputs.value }}
     steps:
       - name: Obtener código
         uses: actions/checkout@v4
@@ -25,8 +26,10 @@ jobs:
         run: npm ci
       - name: Compilar código
         run: npm run build
-      - name: Publicar nombre de archivo
-        run: find dist/assets/*.js -type f -execdir echo 'archivo={}' >> '$GITHUB_OUTPUT' \;
+      - name: Aleatorio
+        run: echo 'numero=`{RANDOM}`' >> '$GITHUB_OUTPUT'
+      - name: Timestamp
+        run: echo 'aleatorio=`date +"%s"`' >> '$GITHUB_OUTPUT'
       - name: Cargar artefacto
         uses: actions/upload-artifact@v3
         with:
@@ -42,7 +45,9 @@ jobs:
           name: website-dist
       - name: Verificar descarga
         run: ls
-      - name: Retornar nombre de archivo
-        run: echo "${{ needs.build.outputs.archivo-de-script }}"
+      - name: Retornar número aleatorio
+        run: echo "${{ needs.build.outputs.numero-aleatorio }}"
+      - name: Retornar timestap
+        run: echo "${{ needs.build.outputs.job-timestamp }}"
       - name: Desplegar sitio web
         run: echo "Desplegando..."
