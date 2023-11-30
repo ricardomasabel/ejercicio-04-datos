@@ -27,9 +27,9 @@ jobs:
       - name: Compilar código
         run: npm run build
       - name: value1
-        run:  echo 'value=HOLA' >> '$GITHUB_OUTPUT'
+        run:  echo "value=HOLA" >> "$GITHUB_OUTPUT"
       - name: value2
-        run:  echo 'value=MUNDO' >> '$GITHUB_OUTPUT'
+        run:  echo "value=MUNDO" >> "$GITHUB_OUTPUT"
       - name: Cargar artefacto
         uses: actions/upload-artifact@v3
         with:
@@ -45,9 +45,7 @@ jobs:
           name: website-dist
       - name: Verificar descarga
         run: ls
-      - name: Retornar uuid
-        run: echo "${{ needs.build.outputs.Value1 }}"
-      - name: Retornar número aleatorio
-        run: echo "${{ needs.build.outputs.Value2 }}"
+      - name: Retornar valores
+        run: echo "${{ needs.build.outputs.Value1 }}" "${{ needs.build.outputs.Value2 }}"
       - name: Desplegar sitio web
         run: echo "Desplegando..."
