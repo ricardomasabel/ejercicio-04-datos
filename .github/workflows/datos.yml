@@ -28,7 +28,7 @@ jobs:
       - name: UUID
         run:  |
           uuid=$(uuidgen)
-          echo 'my-uuid=$uuid' >> '$GITHUB_OUTPUT's
+          echo 'my-uuid=$uuid' >> '$GITHUB_OUTPUT'
       - name: Cargar artefacto
         uses: actions/upload-artifact@v3
         with:
