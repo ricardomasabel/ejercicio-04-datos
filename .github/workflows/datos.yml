@@ -16,6 +16,8 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    outputs:
+      archivo-de-script: ${{ steps.publish.outputs.archivo }}
     steps:
       - name: Obtener código
         uses: actions/checkout@v4
@@ -23,6 +25,8 @@ jobs:
         run: npm ci
       - name: Compilar código
         run: npm run build
+      - name: Publicar nombre de archivo
+        run: find dist/assets/*.js -type f -execdir echo 'archivo={}' >> $GITHUB_OUTPUT ';'
       - name: Cargar artefacto
         uses: actions/upload-artifact@v3
         with:
@@ -38,5 +42,7 @@ jobs:
           name: website-dist
       - name: Verificar descarga
         run: ls
+      - name: Retornar nombre de archivo
+        run: echo "${{ needs.build.outputs.archivo-de-script }}"
       - name: Desplegar sitio web
         run: echo "Desplegando..."
