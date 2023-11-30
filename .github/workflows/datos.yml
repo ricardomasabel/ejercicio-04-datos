@@ -28,7 +28,6 @@ jobs:
       - name: Establecer-secreto
         run: |
           el_secreto=$((RANDOM))
-          echo "::add-mask::$el_secreto"
           echo "valor-secreto=$el_secreto" >> "$GITHUB_OUTPUT"
       - name: value2
         run:  echo "value=MUNDO" >> "$GITHUB_OUTPUT"
