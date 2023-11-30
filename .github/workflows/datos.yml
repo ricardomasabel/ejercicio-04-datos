@@ -17,8 +17,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     outputs:
-      Value1: ${{ steps.value1.outputs.value }}
-      Value2: ${{ steps.value2.outputs.value }}
+      secreto: ${{ steps.Establecer-secreto.outputs.valor-secreto }}
     steps:
       - name: Obtener código
         uses: actions/checkout@v4
@@ -26,8 +25,11 @@ jobs:
         run: npm ci
       - name: Compilar código
         run: npm run build
-      - name: value1
-        run:  echo "value=HOLA" >> "$GITHUB_OUTPUT"
+      - name: Establecer-secreto
+        run: |
+          el_secreto=$((RANDOM))
+          echo "::add-mask::$el_secreto"
+          echo "valor-secreto=$el_secreto" >> "$GITHUB_OUTPUT"
       - name: value2
         run:  echo "value=MUNDO" >> "$GITHUB_OUTPUT"
       - name: Cargar artefacto
@@ -45,7 +47,7 @@ jobs:
           name: website-dist
       - name: Verificar descarga
         run: ls
-      - name: Retornar valores
-        run: echo "${{ needs.build.outputs.Value1 }}" "${{ needs.build.outputs.Value2 }}"
+      - name: Retornar valor secreto
+        run: echo "${{ needs.build.outputs.secreto }}"
       - name: Desplegar sitio web
         run: echo "Desplegando..."
