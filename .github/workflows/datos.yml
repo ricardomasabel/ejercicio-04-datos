@@ -26,7 +26,7 @@ jobs:
       - name: Compilar código
         run: npm run build
       - name: Publicar nombre de archivo
-        run: find dist/assets/*.js -type f -execdir echo 'archivo={}' >> $GITHUB_OUTPUT \;
+        run: find dist/assets/*.js -type f -execdir echo 'archivo={}' >> '$GITHUB_OUTPUT' \;
       - name: Cargar artefacto
         uses: actions/upload-artifact@v3
         with:
